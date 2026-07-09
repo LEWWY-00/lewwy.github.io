@@ -1,0 +1,22 @@
+/**
+ * Copies the raw executor loadstring payload directly to the clipboard
+ * and updates the visual UI button state to show execution feedback.
+ */
+function copyScript(scriptText, button) {
+    navigator.clipboard.writeText(scriptText).then(() => {
+        // Save the layout configuration currently inside the button
+        const originalContent = button.innerHTML;
+        
+        // Transform button presentation into confirmation state
+        button.innerHTML = `<i class="fa-solid fa-check text-sm"></i> <span>Copied!</span>`;
+        button.classList.add('opacity-80');
+        
+        // Restore default button presentation after 2000 milliseconds
+        setTimeout(() => {
+            button.innerHTML = originalContent;
+            button.classList.remove('opacity-80');
+        }, 2000);
+    }).catch(err => {
+        console.error('System failed to process clipboard write operational sequence: ', err);
+    });
+}
