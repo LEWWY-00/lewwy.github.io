@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lewwy Script Hub</title>
+    <style>
+        /* Base styles matching the reference image layout */
+        body {
+            background-color: #0b0c16;
+            background-image: radial-gradient(rgba(255,255,255,0.1) 1px, transparent 0);
+            background-size: 40px 40px;
+            color: #ffffff;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 32px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .header {
+            text-align: center;
+            max-width: 700px;
+            margin-bottom: 56px;
+        }
+
+        /* Top badge styled with an infinite neon purple breathing animation */
+        .badge {
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: #b577f2;
+            background-color: rgba(26, 18, 53, 0.6);
+            padding: 6px 20px;
+            border-radius: 9999px;
+            border: 1px solid rgba(157, 78, 221, 0.4);
+            display: inline-block;
+            animation: badge-glow 2.5s ease-in-out infinite alternate;
+        }
+
+        /* Continuous pulse keyframes for the main header badge framework */
+        @keyframes badge-glow {
+            0% {
+                border-color: rgba(157, 78, 221, 0.3);
+                box-shadow: 0 0 6px rgba(157, 78, 221, 0.15);
+                text-shadow: 0 0 2px rgba(157, 78, 221, 0.3);
+            }
+            100% {
+                border-color: rgba(157, 78, 221, 0.9);
+                box-shadow: 0 0 16px rgba(157, 78, 221, 0.6);
+                text-shadow: 0 0 8px rgba(157, 78, 221, 0.9);
+            }
+        }
+
+        /* High-fidelity animated text style properties with hover glow */
+        h1 {
+            font-size: 3.8rem;
+            font-weight: 900;
+            margin: 20px 0 14px 0;
+            letter-spacing: -0.03em;
+            
+            /* Core setup for text gradients */
+            background: linear-gradient(
+                90deg, 
+                #9d4edd, 
+                #f43f5e, 
+                #00b4d8, 
+                #9d4edd
+            );
+            background-size: 300% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            
+            /* Animation loop and smooth transition settings */
+            animation: gradient-flow 4s linear infinite;
+            transition: filter 0.3s ease;
+            cursor: default;
+        }
+
+        /* Pointing mouse at title injects a clean neon back-glow effect */
+        h1:hover {
+            filter: drop-shadow(0 0 15px rgba(157, 78, 221, 0.6));
+        }
+
+        /* Dynamic keyframes driving the linear background shifts */
+        @keyframes gradient-flow {
+            0% { background-position: 0% center; }
+            100% { background-position: 300% center; }
+        }
+
+        .subtitle {
+            color: #94a3b8;
+            font-size: 15px;
+            margin: 0;
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        /* Expanded card content container boundary box */
+        .content-area {
+            max-width: 460px; 
+            width: 100%;
+            padding: 0 16px;
+            box-sizing: border-box;
+        }
+
+        .card {
+            background-color: #121324;
+            border: 1px solid rgba(31, 41, 55, 0.4);
+            border-radius: 20px;
+            padding: 24px; 
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        /* Pointing mouse at the card lifts it up, triggers internal zoom, and casts a bright cyan external glow shadow */
+        .card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(0, 180, 216, 0.5);
+            box-shadow: 0 10px 30px -5px rgba(0, 180, 216, 0.3);
+        }
+
+        .image-container {
+            position: relative;
+            border-radius: 14px;
+            overflow: hidden;
+            aspect-ratio: 16 / 9;
+            margin-bottom: 24px;
+            background-color: #1a1b30;
+        }
+
+        /* Smooth hardware-accelerated transformation transition for the image */
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* Triggers a 6% image scale magnification when the card is hovered */
+        .card:hover .image-container img {
+            transform: scale(1.06);
+        }
+
+        .tag {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            color: #ffffff;
+            font-weight: 800;
+            font-size: 12px;
+            padding: 4px 12px;
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            z-index: 10;
+        }
+
+        /* Simulator Category Text wrapped in an ellipse border with a continuous breathing glow animation */
+        .category {
+            font-size: 11px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            margin-bottom: 12px;
+            margin-top: 4px;
+            display: inline-block;
+            align-self: flex-start;
+            padding: 4px 14px;
+            border-radius: 9999px; /* Absolute round boundary forces ellipse container proportions */
+            border: 1px solid rgba(0, 180, 216, 0.4);
+            background-color: rgba(0, 180, 216, 0.05);
+            animation: ellipse-glow 2.5s ease-in-out infinite alternate;
+        }
+
+        /* Continuous breathing back-illumination keyframes for the ellipse text container */
+        @keyframes ellipse-glow {
+            0% {
+                border-color: rgba(0, 180, 216, 0.3);
+                box-shadow: 0 0 4px rgba(0, 180, 216, 0.1);
+                text-shadow: 0 0 2px rgba(0, 180, 216, 0.2);
+            }
+            100% {
+                border-color: rgba(0, 180, 216, 0.8);
+                box-shadow: 0 0 14px rgba(0, 180, 216, 0.5);
+                text-shadow: 0 0 6px rgba(0, 180, 216, 0.8);
+            }
+        }
+
+        h3 {
+            font-size: 24px; 
+            font-weight: bold;
+            margin: 0 0 8px 0;
+        }
+        .description {
+            color: #94a3b8;
+            font-size: 14px; 
+            line-height: 1.6;
+            margin: 0 0 32px 0;
+            flex-grow: 1;
+            opacity: 0.75;
+        }
+
+        /* Scaled link display interaction action button */
+        .btn {
+            width: 100%;
+            border: none;
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 13px; 
+            padding: 16px 20px; 
+            border-radius: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+            box-sizing: border-box;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .theme-cyan .tag { background-color: #00b4d8; }
+        .theme-cyan .category { color: #00b4d8; }
+        .theme-cyan .btn { background-color: #00b4d8; }
+        
+        /* Pointing mouse at button alters standard cyan hue and adds internal/external glow shadows */
+        .theme-cyan .btn:hover { 
+            background-color: #0096c7; 
+            box-shadow: 0 0 15px rgba(0, 180, 216, 0.4);
+        }
+
+        .footer {
+            margin-top: 56px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+            color: #64748b;
+            letter-spacing: 0.05em;
+        }
+        .footer-highlight {
+            color: #9d4edd;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <div class="header">
+        <!-- The updated tag badge featuring continuous breathing violet glow frames -->
+        <span class="badge">Roblox Script Hub</span>
+        <h1>lewwy Script Hub</h1>
+        <p class="subtitle">Select a game to get the script — copy with one click, paste into your executor!</p>
+    </div>
+
+    <!-- Centered Expanded Card Container -->
+    <div class="content-area">
+        <div class="card theme-cyan">
+            <div class="image-container">
+                <img src="banner.jpg" alt="Steal at Night">
+                <span class="tag">Grows Offline</span>
+            </div>
+            <span class="category">Simulator</span>
+            <h3>Grow A Garden 2</h3>
+            <p class="description">Auto farm, auto collect, speed hack and many other powerful features.</p>
+            
+            <!-- Button Configuration Layout Panel Area links -->
+            <button onclick="copyScript(this)" data-script="loadstring(game:HttpGet(&quot;https://githubusercontent.com;))()" class="btn">
+                <span>https://githubusercontent.com</span>
+            </button>
+            
+        </div>
+    </div>
+
+    <!-- Footer Instructions -->
+    <div class="footer">
+        Made by lewwy • Paste into your executor and hit <span class="footer-highlight">Execute</span>
+    </div>
+
